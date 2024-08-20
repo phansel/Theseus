@@ -24,7 +24,6 @@ use alloc::sync::{Arc, Weak};
 use memory::MappedPages;
 use io::{ByteReader, ByteWriter, KnownLength};
 
-
 /// A reference to any type that implements the [`File`] trait,
 /// which can only represent a File (not a Directory).
 pub type FileRef = Arc<Mutex<dyn File + Send>>;
