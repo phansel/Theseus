@@ -417,7 +417,7 @@ limine:
 ## https://github.com/retrage/edk2-nightly.
 $(efi_firmware):
 	@echo -e "\033[1;34m\nDownloading prebuilt EFI firmware from GitHub...\033[0m"
-	@wget -nv --show-progress https://raw.githubusercontent.com/retrage/edk2-nightly/$(OVMF_COMMIT)/bin/$(OVMF_FILE) -O $(efi_firmware)
+	@wget -nv https://raw.githubusercontent.com/retrage/edk2-nightly/$(OVMF_COMMIT)/bin/$(OVMF_FILE) -O $(efi_firmware)
 
 
 ### This target copies all extra files into the `ISOFILES` directory,
