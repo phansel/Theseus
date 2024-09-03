@@ -196,6 +196,7 @@ fn check_and_add_free_region<P, R>(
     where P: Borrow<PhysicalMemoryRegion>,
           R: IntoIterator<Item = P> + Clone,
 {
+    let mut area = area.clone();
     // This will be set to the frame that is the start of the current free region. 
     let mut current_start = *area.start();
     // This will be set to the frame that is the end of the current free region. 
@@ -229,11 +230,14 @@ fn check_and_add_free_region<P, R>(
                     free_list_idx,
                     reserved_physical_memory_areas.clone(),
                 );
+                area = FrameRange::new(*area.start(), current_end);
+                // info!("Updating original region after exiting recursive function: {:X?}", area);
             }
         }
     }
 
     let new_area = FrameRange::new(current_start, current_end);
+    // info!("Adding new area: {:X?}", new_area);
     if new_area.size_in_frames() > 0 {
         free_list[*free_list_idx] = Some(PhysicalMemoryRegion {
             typ:  MemoryRegionType::Free,
