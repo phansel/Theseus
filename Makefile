@@ -77,6 +77,9 @@ ifeq ($(UNAME),Darwin)
 	## macOS uses a different unmounting utility
 	UNMOUNT = diskutil unmount
 	USB_DRIVES = $(shell diskutil list external | grep -s "/dev/" | awk '{print $$1}')
+else ifeq ($(UNAME),FreeBSD)
+	UNMOUNT = umount
+	USB_DRIVES = $(shell usbconfig list | awk -F':' '{print $$1}')
 else
 	## Handle building for aarch64 on x86_64 Linux/WSL
 	ifeq ($(ARCH),aarch64)
